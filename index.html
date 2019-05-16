@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html ng-app="marvelAPI">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Wiser - Marvel test</title>
+
+  <script src="js/md5/md5.min.js"></script>
+  <script src="//code.angularjs.org/1.3.0-rc.1/angular.min.js"></script>
+
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+
+  <script src="/js/controller/app.js"></script>
+  <script src="/js/service/app.service.js"></script>
+  <script src="/js/service/auth.service.js"></script>
+</head>
+
+<body ng-controller="MainCtrl as vm">
+  <form name="search" class="sticky header">
+    <h4 class="center">Search by character name (starting by):</h4>
+    <div name="search" class="center">
+      <input type="text" ng-model="vm.searchValue" placeholder="Type character's name here" class="input center inline">
+      <button class="button inline" ng-click="vm.getCharacters(vm.searchValue)">Search</button>
+    </div>
+  </form>
+  <div name="results" class="results content">
+    <div class="center" ng-repeat="char in vm.charList">
+      <div name="character" ng-click="vm.open(char)">
+        <div name="char" class="inline">
+          <span class="charName text-bold">{{char.name}}</span>
+        </div>
+      </div>
+      <div name="charExpanded" class="details" ng-if="char.expanded == true">
+        <div name="image">
+          <img ng-src="{{char.thumbnail.path + '.' + char.thumbnail.extension}}" alt="{{char.name}}" class="image">
+        </div>
+        <div name="description" class="description">
+          <span>{{char.description}}</span>
+        </div>
+        <span class="text-bold">Appearances: {{char.comics.available}}<br></span>
+        <span ng-repeat="item in char.comics.items">-{{item.name}}<br></span>
+      </div>
+      <hr>
+    </div>
+  </div>
+</body>
+
+</html>
